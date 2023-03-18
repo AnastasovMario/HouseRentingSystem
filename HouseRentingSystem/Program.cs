@@ -1,4 +1,4 @@
-using HouseRentingSystem.Data;
+using HouseRentingSystem.Infrastucture.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
