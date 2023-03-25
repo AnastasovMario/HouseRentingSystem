@@ -1,4 +1,5 @@
-﻿using HouseRentingSystem.Core.Contracts;
+﻿using HouseRentingSystem.Core.Constants;
+using HouseRentingSystem.Core.Contracts;
 using HouseRentingSystem.Core.Models.Agent;
 using HouseRentingSystem.Extensions;
 using Microsoft.AspNetCore.Authorization;
@@ -21,10 +22,14 @@ namespace HouseRentingSystem.Controllers
             //Then from the service we check if he is already an agent;
             if (await agentService.ExistsByIdAsync(User.Id()))
             {
-                return BadRequest();
+                TempData[MessageConstant.ErrorMessage] = "Вие вече сте Агент";
+
+                return RedirectToAction("Index", "Home");
             }
 
-            return View();
+            TempData[MessageConstant.SuccessMessage] = "Вие вече сте Агент";
+
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpPost]
