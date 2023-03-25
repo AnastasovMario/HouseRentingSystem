@@ -19,7 +19,7 @@ namespace HouseRentingSystem.Controllers
         {
             //we are getting the Users Id from the method we wrote - User.Id
             //Then from the service we check if he is already an agent;
-            if (await agentService.ExistsById(User.Id()))
+            if (await agentService.ExistsByIdAsync(User.Id()))
             {
                 return BadRequest();
             }
