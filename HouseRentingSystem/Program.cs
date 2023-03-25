@@ -20,7 +20,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 })
 	.AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
-//тези сървиси може да ги добавим в отделен клас, който да имплементираме тук 
+//тези сървиси може да ги добавим в отделен клас, който да имплементираме тук new info?
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
