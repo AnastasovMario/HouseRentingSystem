@@ -27,14 +27,46 @@ namespace HouseRentingSystem.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            TempData[MessageConstant.SuccessMessage] = "Вие вече сте Агент";
+            var model = new BecomeAgentModel();
 
-            return RedirectToAction("Index", "Home");
+
+
+            return View(model);
         }
 
         [HttpPost]
         public async Task<IActionResult> Become(BecomeAgentModel model)
         {
+            var userId = User.Id();
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            if (await agentService.ExistsByIdAsync(userId))
+            {
+                TempData[MessageConstant.SuccessMessage] = "Вие вече сте Агент";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (await agentService.UserWithPhoneNumberExistsAsync(model.PhoneNumber))
+            {
+                TempData[MessageConstant.ErrorMessage] = "Телефона вече съществува";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            if (await agentService.UserHasRents(userId))
+            {
+                TempData[MessageConstant.ErrorMessage] = "Не трябва да имате наеми, за да станете агент";
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            await agentService.Create(userId, model.PhoneNumber);
+
             //връща към първата страница
             return RedirectToAction("All", "House");
         }
