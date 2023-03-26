@@ -3,11 +3,6 @@ using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Infrastructure.Data;
 using HouseRentingSystem.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HouseRentingSystem.Core.Services
 {
@@ -24,13 +19,15 @@ namespace HouseRentingSystem.Core.Services
         {
             return await repo.AllReadonly<House>()
                 .OrderByDescending(h => h.Id)
-                .Take(3)
                 .Select(h => new HouseHomeModel()
                 {
                     Id = h.Id,
                     Title = h.Title,
-                    ImageUrl = h.ImageUrl
-                }).ToListAsync();
+                    ImageUrl = h.ImageUrl,
+                    Address = h.Address
+                })
+                .Take(3)
+                .ToListAsync();
         }
     }
 }
