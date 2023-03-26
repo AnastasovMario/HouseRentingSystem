@@ -27,6 +27,30 @@ namespace HouseRentingSystem.Core.Services
                 .ToListAsync();
         }
 
+        public async Task<bool> CategoryExists(int categoryId)
+        {
+            return await repo.AllReadonly<Category>()
+                .AnyAsync(c => c.Id == categoryId);
+        }
+
+        public async Task<int> Create(HouseModel model)
+        {
+            var house = new House()
+            {
+                Address = model.Address,
+                CategoryId = model.CategoryId,
+                Description = model.Description,
+                ImageUrl = model.ImageUrl,
+                PricePerMonth = model.PricePerMonth,
+                Title= model.Title,
+            };
+
+            await repo.AddAsync(house);
+            await repo.SaveChangesAsync();
+
+            return house.Id;
+        }
+
         //само ще ги четем
         public async Task<IEnumerable<HouseHomeModel>> LastThreeHouses()
         {

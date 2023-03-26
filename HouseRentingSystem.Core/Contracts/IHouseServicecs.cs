@@ -7,5 +7,9 @@ namespace HouseRentingSystem.Core.Contracts
         Task<IEnumerable<HouseHomeModel>> LastThreeHouses();
 
         Task<IEnumerable<HouseCategoryModel>> AllCategories();
+
+        Task<bool> CategoryExists(int categoryId);
+
+        Task<int> Create(HouseModel model);
     }
 }

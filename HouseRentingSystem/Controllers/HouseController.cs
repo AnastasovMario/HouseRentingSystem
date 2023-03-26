@@ -62,7 +62,12 @@ namespace HouseRentingSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(HouseModel model)
         {
-            int Id = 1;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            int Id = await houseService.Create(model);
 
             //Редиректваме към детайлите, само ако има добавено Id
 
