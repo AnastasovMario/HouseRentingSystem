@@ -14,6 +14,19 @@ namespace HouseRentingSystem.Core.Services
         {
             repo = _repo;
         }
+
+        public async Task<IEnumerable<HouseCategoryModel>> AllCategories()
+        {
+            return await repo.AllReadonly<Category>()
+                .OrderBy(c => c.Name)
+                .Select(c => new HouseCategoryModel()
+                {
+                    Id = c.Id,
+                    Name = c.Name
+                })
+                .ToListAsync();
+        }
+
         //само ще ги четем
         public async Task<IEnumerable<HouseHomeModel>> LastThreeHouses()
         {
