@@ -1,5 +1,7 @@
 using HouseRentingSystem.Infrastructure.Data;
+using HouseRentingSystem.ModelBinders;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,11 +18,14 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options =>
 	options.SignIn.RequireConfirmedPhoneNumber = builder.Configuration.GetValue<bool>("Identity:RequireConfirmedPhoneNumber");
 	options.Password.RequireNonAlphanumeric = builder.Configuration.GetValue<bool>("Identity:RequireNonAlphanumeric");
 	options.Password.RequiredLength = builder.Configuration.GetValue<int>("Identity:RequiredLength");
-
 })
 	.AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews();
-//тези сървиси може да ги добавим в отделен клас, който да имплементираме тук
+builder.Services.AddControllersWithViews()
+    .AddMvcOptions(options =>
+    {
+        //options.Filters.Add<AutoValidateAntiforgeryTokenAttribute>();
+        options.ModelBinderProviders.Insert(0, new DecimalModelBinderProvider());
+    });
 builder.Services.AddApplicationServices();
 
 var app = builder.Build();
