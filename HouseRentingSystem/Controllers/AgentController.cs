@@ -29,8 +29,6 @@ namespace HouseRentingSystem.Controllers
 
             var model = new BecomeAgentModel();
 
-
-
             return View(model);
         }
 
