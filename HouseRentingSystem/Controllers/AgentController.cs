@@ -66,7 +66,7 @@ namespace HouseRentingSystem.Controllers
             await agentService.Create(userId, model.PhoneNumber);
 
             //връща към първата страница
-            return RedirectToAction("All", "House");
+            return RedirectToAction(nameof(HouseController.All), "House");
         }
     }
 }

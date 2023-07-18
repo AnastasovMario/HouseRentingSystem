@@ -20,7 +20,7 @@ namespace HouseRentingSystem.Controllers
             agentService = _agentService;
         }
         [AllowAnonymous]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All([FromQuery] AllHousesQueryModel query)
         {
             var model = new HousesQueryModel();
 
@@ -62,16 +62,28 @@ namespace HouseRentingSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(HouseModel model)
         {
+            if (!await agentService.ExistsByIdAsync(User.Id()))
+            {
+                return RedirectToAction(nameof(AgentController.Become), "Agent");
+            }
+
+            if (!await houseService.CategoryExists(model.CategoryId))
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exists");
+            }
+
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
 
-            int Id = await houseService.Create(model);
+            var agentId = await agentService.GetAgentId(User.Id());
+
+            int newHouseId = await houseService.Create(model, agentId);
 
             //Редиректваме към детайлите, само ако има добавено Id
 
-            return RedirectToAction(nameof(Details), new { Id });
+            return RedirectToAction(nameof(Details), new { newHouseId });
         }
 
         [HttpGet]

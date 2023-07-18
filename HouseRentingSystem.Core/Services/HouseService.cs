@@ -3,6 +3,7 @@ using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Infrastructure.Data;
 using HouseRentingSystem.Infrastructure.Data.Common;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace HouseRentingSystem.Core.Services
 {
@@ -33,7 +34,7 @@ namespace HouseRentingSystem.Core.Services
                 .AnyAsync(c => c.Id == categoryId);
         }
 
-        public async Task<int> Create(HouseModel model)
+        public async Task<int> Create(HouseModel model, int agentId)
         {
             var house = new House()
             {
@@ -42,7 +43,8 @@ namespace HouseRentingSystem.Core.Services
                 Description = model.Description,
                 ImageUrl = model.ImageUrl,
                 PricePerMonth = model.PricePerMonth,
-                Title= model.Title,
+                Title = model.Title,
+                AgentId = agentId
             };
 
             await repo.AddAsync(house);
