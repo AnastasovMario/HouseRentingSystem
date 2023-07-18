@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace HouseRentingSystem.Core.Models.House
 {
-    public class HousesQueryModel
+    public enum HouseSorting
     {
+        Newest = 0,
+        Price = 1,
+        NotRentedFirst = 2,
     }
 }

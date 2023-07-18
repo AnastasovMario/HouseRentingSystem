@@ -16,6 +16,63 @@ namespace HouseRentingSystem.Core.Services
             repo = _repo;
         }
 
+        public async Task<HousesQueryServiceModel> All(
+            string? category = null,
+            string? searchTerm = null,
+            HouseSorting sorting = HouseSorting.Newest,
+            int currentPage = 1,
+            int housesPerPage = 1)
+        {
+            var result = new HousesQueryServiceModel();
+            var housesQuery = repo.AllReadonly<House>();
+                //.Where(h => h.IsActive);
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                housesQuery = housesQuery.Where(h => h.Category.Name == category);
+            }
+
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                housesQuery = housesQuery
+                    .Where(h => h.Title.Contains(searchTerm)
+                    || h.Address.Contains(searchTerm)
+                    || h.Description.Contains(searchTerm));
+            }
+
+            housesQuery = sorting switch
+            {
+                HouseSorting.Price => housesQuery
+                    .OrderBy(h => h.PricePerMonth),
+                HouseSorting.NotRentedFirst => housesQuery
+                    .OrderBy(h => h.RenterId != null)
+                    .ThenByDescending(h => h.Id),
+                _ => housesQuery.OrderByDescending(h => h.Id)
+            };
+
+            var houses = await housesQuery
+                .Skip((currentPage - 1) * housesPerPage)
+                .Take(housesPerPage)
+                .Select(h => new HouseServiceModel()
+                {
+                    Id = h.Id,
+                    Address = h.Address,
+                    ImageUrl = h.ImageUrl,
+                    IsRented = h.RenterId != null,
+                    PricePerMonth = h.PricePerMonth,
+                    Title = h.Title
+                })
+                .ToListAsync();
+
+            var totalHousesCount = await housesQuery.CountAsync();
+
+            return new()
+            {
+                TotalHousesCount = totalHousesCount,
+                Houses = houses,
+            };
+        }
+
         public async Task<IEnumerable<HouseCategoryModel>> AllCategories()
         {
             return await repo.AllReadonly<Category>()
@@ -25,6 +82,14 @@ namespace HouseRentingSystem.Core.Services
                     Id = c.Id,
                     Name = c.Name
                 })
+                .ToListAsync();
+        }
+
+        public async Task<IEnumerable<string>> AllCategoriesNames()
+        {
+            return await repo.AllReadonly<Category>()
+                .Select(c => c.Name)
+                .Distinct()
                 .ToListAsync();
         }
 
