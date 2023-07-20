@@ -32,6 +32,6 @@ namespace HouseRentingSystem.Core.Models.House
         [Display(Name = "Category")]
         public int CategoryId { get; init; }
 
-        public IEnumerable<HouseCategoryModel> HouseCategories { get; init; } = new List<HouseCategoryModel>();
+        public IEnumerable<HouseCategoryModel> HouseCategories { get; set; } = new List<HouseCategoryModel>();
     }
 }

@@ -151,6 +151,38 @@ namespace HouseRentingSystem.Core.Services
             return house.Id;
         }
 
+        public async Task<bool> HasAgentWithId(int houseId, string currentUserId)
+        {
+            bool result = false;
+            var house = await repo.AllReadonly<House>()
+                //.Where(h => h.IsActive)
+                .Where(h => h.Id == houseId)
+                .Include(h => h.Agent)
+                .FirstOrDefaultAsync();
+
+            if (house?.Agent != null && house.Agent.UserId == currentUserId)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        public async Task Edit(int houseId, HouseModel houseModel)
+        {
+            var house = await repo.GetByIdAsync<House>(houseId);
+
+            house.Description = houseModel.Description;
+            house.ImageUrl = houseModel.ImageUrl;
+            house.PricePerMonth = houseModel.PricePerMonth;
+            house.Title = houseModel.Title;
+            house.Address = houseModel.Address;
+            house.CategoryId = houseModel.CategoryId;
+
+            await repo.SaveChangesAsync();
+
+        }
+
         public async Task<bool> Exists(int Id)
             => await repo.AllReadonly<House>()
             .AnyAsync(h => h.Id == Id);
@@ -192,6 +224,11 @@ namespace HouseRentingSystem.Core.Services
                 })
                 .Take(3)
                 .ToListAsync();
+        }
+
+        public async Task<int> GetHouseCategoryId(int houseId)
+        {
+            return (await repo.GetByIdAsync<House>(houseId)).CategoryId;
         }
     }
 }

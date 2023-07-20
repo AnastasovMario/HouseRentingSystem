@@ -28,5 +28,11 @@ namespace HouseRentingSystem.Core.Contracts
         Task<bool> Exists(int Id);
 
         Task<HouseDetailsServiceModel> HouseDetailsById(int id);
+
+        Task Edit(int houseId, HouseModel houseModel);
+
+        Task<bool> HasAgentWithId(int houseId, string currentUserId);
+
+        Task<int> GetHouseCategoryId(int houseId);
     }
 }

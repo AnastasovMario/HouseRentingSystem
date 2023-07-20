@@ -2,6 +2,7 @@
 using HouseRentingSystem.Core.Extensions;
 using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Extensions;
+using HouseRentingSystem.Infrastructure.Data;
 using HouseRentingSystem.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -126,7 +127,31 @@ namespace HouseRentingSystem.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var model = new HouseModel();
+            if ((await houseService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if ((await houseService.HasAgentWithId(id, this.User.Id())) == false)
+            {
+
+                return RedirectToPage("/Account/AccessDenied");
+            }
+
+            var house = await houseService.HouseDetailsById(id);
+            var houseCategory = await houseService.GetHouseCategoryId(id);
+
+            var model = new HouseModel()
+            {
+                Id = id,
+                Address = house.Address,
+                CategoryId = houseCategory,
+                Description = house.Description,
+                ImageUrl = house.ImageUrl,
+                PricePerMonth = house.PricePerMonth,
+                Title = house.Title,
+                HouseCategories = await houseService.AllCategories()
+            };
 
             return View(model);
         }
@@ -134,7 +159,31 @@ namespace HouseRentingSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(int id, HouseModel model)
         {
-            return RedirectToAction(nameof(Details), new { id });
+            if ((await houseService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if ((await houseService.HasAgentWithId(id, this.User.Id())) == false)
+            {
+
+                return RedirectToPage("/Account/AccessDenied");
+            }
+
+            if ((await houseService.CategoryExists(model.CategoryId)) == false)
+            {
+                ModelState.AddModelError(nameof(model.CategoryId), "Category does not exists");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                model.HouseCategories = await houseService.AllCategories();
+
+                return View(model);
+            }
+            await houseService.Edit(model.Id, model);
+
+            return RedirectToAction(nameof(Details), new { id = model.Id, information = model.GetInformation() });
         }
 
         [HttpPost]
