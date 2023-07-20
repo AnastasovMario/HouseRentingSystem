@@ -1,4 +1,5 @@
 ﻿using HouseRentingSystem.Core.Contracts;
+using HouseRentingSystem.Core.Extensions;
 using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Extensions;
 using HouseRentingSystem.Models;
@@ -33,7 +34,7 @@ namespace HouseRentingSystem.Controllers
 
             var housesCategories = await houseService.AllCategoriesNames();
             model.Categories = housesCategories;
-            
+
 
             return View(model);
         }
@@ -60,9 +61,21 @@ namespace HouseRentingSystem.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Details(int id)
+        public async Task<IActionResult> Details(int id, string information)
         {
-            var model = new HouseDetailsModel();
+
+            if ((await houseService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+            var model = await houseService.HouseDetailsById(id);
+
+            //if (information != model.GetInformation())
+            //{
+            //    TempData["ErrorMessage"] = "Don't touch my slug!";
+
+            //    return RedirectToAction("Index", "Home");
+            //}
 
             return View(model);
         }

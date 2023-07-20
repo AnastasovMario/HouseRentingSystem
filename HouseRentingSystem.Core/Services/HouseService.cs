@@ -1,4 +1,5 @@
 ﻿using HouseRentingSystem.Core.Contracts;
+using HouseRentingSystem.Core.Models.Agent;
 using HouseRentingSystem.Core.Models.House;
 using HouseRentingSystem.Infrastructure.Data;
 using HouseRentingSystem.Infrastructure.Data.Common;
@@ -148,6 +149,33 @@ namespace HouseRentingSystem.Core.Services
             await repo.SaveChangesAsync();
 
             return house.Id;
+        }
+
+        public async Task<bool> Exists(int Id)
+            => await repo.AllReadonly<House>()
+            .AnyAsync(h => h.Id == Id);
+
+        public async Task<HouseDetailsServiceModel> HouseDetailsById(int id)
+        {
+            return await repo.AllReadonly<House>()
+                .Where(h => h.Id == id)
+                .Select(h => new HouseDetailsServiceModel()
+                {
+                    Id = h.Id,
+                    Title = h.Title,
+                    Address = h.Address,
+                    ImageUrl = h.ImageUrl,
+                    Description = h.Description,
+                    Category = h.Category.Name,
+                    IsRented = h.RenterId != null,
+                    PricePerMonth = h.PricePerMonth,
+                    Agent = new AgentServiceModel()
+                    {
+                        Email = h.Agent.User.Email,
+                        PhoneNumber = h.Agent.PhoneNumber
+                    }
+                })
+                .FirstAsync();
         }
 
         //само ще ги четем
