@@ -36,5 +36,11 @@ namespace HouseRentingSystem.Core.Contracts
         Task<int> GetHouseCategoryId(int houseId);
 
         Task Delete(int houseId);
+
+        Task<bool> IsRented(int Id);
+
+        Task<bool> IsRentedByUser(int Id, string userId);
+
+        Task Rent(int Id, string userId);
     }
 }
