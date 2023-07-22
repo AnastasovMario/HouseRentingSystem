@@ -258,6 +258,18 @@ namespace HouseRentingSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Leave(int id)
         {
+            if ((await houseService.IsRented(id)) == false 
+                || (await houseService.Exists(id)) == false)
+            {
+                return RedirectToAction(nameof(All));
+            }
+
+            if ((await houseService.IsRentedByUser(id, User.Id())) == false)
+            {
+                return RedirectToPage("/Account/AccessDenied");
+            }
+
+            await houseService.Leave(id);
             return RedirectToAction(nameof(Mine));
         }
     }

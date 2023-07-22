@@ -42,5 +42,7 @@ namespace HouseRentingSystem.Core.Contracts
         Task<bool> IsRentedByUser(int Id, string userId);
 
         Task Rent(int Id, string userId);
+
+        Task Leave(int Id);
     }
 }
