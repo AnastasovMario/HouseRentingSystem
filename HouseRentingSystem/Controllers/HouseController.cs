@@ -47,7 +47,7 @@ namespace HouseRentingSystem.Controllers
 
             var userId = this.User.Id();
 
-            if (await agentService.ExistsByIdAsync(userId))
+            if (await agentService.ExistsById(userId))
             {
                 var agentId = await agentService.GetAgentId(userId);
                 myHouses = await houseService.AllHousesByAgentId(agentId);
@@ -85,7 +85,7 @@ namespace HouseRentingSystem.Controllers
         public async Task<IActionResult> Add()
         {
             //If not an agent, Return to redirect
-            if (!(await agentService.ExistsByIdAsync(User.Id())))
+            if (!(await agentService.ExistsById(User.Id())))
             {
                 return RedirectToAction(nameof(AgentController.Become), "Agent");
             }
@@ -100,7 +100,7 @@ namespace HouseRentingSystem.Controllers
         [HttpPost]
         public async Task<IActionResult> Add(HouseModel model)
         {
-            if (!await agentService.ExistsByIdAsync(User.Id()))
+            if (!await agentService.ExistsById(User.Id()))
             {
                 return RedirectToAction(nameof(AgentController.Become), "Agent");
             }
@@ -240,7 +240,7 @@ namespace HouseRentingSystem.Controllers
 
             }
 
-            if (await agentService.ExistsByIdAsync(User.Id()))
+            if (await agentService.ExistsById(User.Id()))
             {
                 return RedirectToPage("/Account/AccessDenied");
             }

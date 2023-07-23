@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace HouseRentingSystem.Core.Contracts
+﻿namespace HouseRentingSystem.Core.Contracts
 {
     public interface IAgentService
     {
-        Task<bool> ExistsByIdAsync(string userId);
+        Task<bool> ExistsById(string userId);
 
         Task<bool> UserWithPhoneNumberExistsAsync(string phoneNumber);
 

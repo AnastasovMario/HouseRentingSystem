@@ -31,7 +31,7 @@ namespace HouseRentingSystem.Core.Services
             await repo.SaveChangesAsync();
         }
 
-        public async Task<bool> ExistsByIdAsync(string userId)
+        public async Task<bool> ExistsById(string userId)
         {
             return await repo.All<Agent>()
                 .AnyAsync(agent => agent.UserId == userId);

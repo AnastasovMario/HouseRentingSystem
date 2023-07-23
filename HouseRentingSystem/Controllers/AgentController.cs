@@ -20,7 +20,7 @@ namespace HouseRentingSystem.Controllers
         {
             //we are getting the Users Id from the method we wrote - User.Id
             //Then from the service we check if he is already an agent;
-            if (await agentService.ExistsByIdAsync(User.Id()))
+            if (await agentService.ExistsById(User.Id()))
             {
                 TempData[MessageConstant.ErrorMessage] = "Вие вече сте Агент";
 
@@ -42,7 +42,7 @@ namespace HouseRentingSystem.Controllers
                 return View(model);
             }
 
-            if (await agentService.ExistsByIdAsync(userId))
+            if (await agentService.ExistsById(userId))
             {
                 TempData[MessageConstant.SuccessMessage] = "Вие вече сте Агент";
 
