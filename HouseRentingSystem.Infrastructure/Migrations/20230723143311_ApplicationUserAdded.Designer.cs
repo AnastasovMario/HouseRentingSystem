@@ -4,6 +4,7 @@ using HouseRentingSystem.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HouseRentingSystem.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230723143311_ApplicationUserAdded")]
+    partial class ApplicationUserAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -140,8 +142,8 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                             Email = "agent@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Linda",
-                            LastName = "Michaels",
                             IsActive = true,
+                            LastName = "Michaels",
                             LockoutEnabled = false,
                             NormalizedEmail = "agent@mail.com",
                             NormalizedUserName = "agent@mail.com",
@@ -159,8 +161,8 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                             Email = "guest@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Guest",
-                            LastName = "Guestov",
                             IsActive = true,
+                            LastName = "Guestov",
                             LockoutEnabled = false,
                             NormalizedEmail = "guest@mail.com",
                             NormalizedUserName = "guest@mail.com",
@@ -178,8 +180,8 @@ namespace HouseRentingSystem.Infrastructure.Migrations
                             Email = "mario@mail.com",
                             EmailConfirmed = false,
                             FirstName = "Mario",
-                            LastName = "Anastasov",
                             IsActive = true,
+                            LastName = "Anastasov",
                             LockoutEnabled = false,
                             NormalizedEmail = "mario@mail.com",
                             NormalizedUserName = "mario@mail.com",
