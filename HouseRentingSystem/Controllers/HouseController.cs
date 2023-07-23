@@ -71,12 +71,12 @@ namespace HouseRentingSystem.Controllers
             }
             var model = await houseService.HouseDetailsById(id);
 
-            //if (information != model.GetInformation())
-            //{
-            //    TempData["ErrorMessage"] = "Don't touch my slug!";
+            if (information != model.GetInformation())
+            {
+                TempData["ErrorMessage"] = "Don't touch my slug!";
 
-            //    return RedirectToAction("Index", "Home");
-            //}
+                return RedirectToAction("Index", "Home");
+            }
 
             return View(model);
         }
@@ -117,11 +117,11 @@ namespace HouseRentingSystem.Controllers
 
             var agentId = await agentService.GetAgentId(User.Id());
 
-            int newHouseId = await houseService.Create(model, agentId);
+            int id = await houseService.Create(model, agentId);
 
             //Редиректваме към детайлите, само ако има добавено Id
 
-            return RedirectToAction(nameof(Details), new { newHouseId });
+            return RedirectToAction(nameof(Details), new { id = id, information = model.GetInformation() });
         }
 
         [HttpGet]

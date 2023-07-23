@@ -20,7 +20,8 @@ namespace HouseRentingSystem.Core.Extensions
         private static string GetAddress(string address)
         {
             string result = string
-                .Join("-", address.Split(" ", StringSplitOptions.RemoveEmptyEntries).Take(3));
+                .Join("-", address.Split(" ", StringSplitOptions.RemoveEmptyEntries)
+                .Take(3));
 
             return Regex.Replace(address, @"[^a-zA-Z0-9\-]", string.Empty);
         }
