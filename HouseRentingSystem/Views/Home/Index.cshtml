@@ -72,7 +72,7 @@
 @section Scripts {
     <script>
         $('#statistics-button').on('click', ev => {
-            $.get('https://localhost:44376/api/statistics', (data) => {
+            $.get('https://localhost:7170/api/statistics', (data) => {
                 $('#total-houses').text(data.totalHouses + " Houses");
                 $('#total-rents').text(data.totalRent + " Rents");
                 $('#statistics').removeClass('d-none');

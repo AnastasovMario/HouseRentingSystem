@@ -3,11 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33502.453
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem", "HouseRentingSystem\HouseRentingSystem.csproj", "{AE543706-B32E-4391-B55A-18821FF6ED6B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem", "HouseRentingSystem\HouseRentingSystem.csproj", "{AE543706-B32E-4391-B55A-18821FF6ED6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Infrastructure", "HouseRentingSystem.Infrastructure\HouseRentingSystem.Infrastructure.csproj", "{3A8F2483-63B5-45F2-B0E0-7A1B7A8A9CC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Infrastructure", "HouseRentingSystem.Infrastructure\HouseRentingSystem.Infrastructure.csproj", "{3A8F2483-63B5-45F2-B0E0-7A1B7A8A9CC6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.Core", "HouseRentingSystem.Core\HouseRentingSystem.Core.csproj", "{4D5EA680-A58F-421E-A604-2571C7405288}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HouseRentingSystem.Core", "HouseRentingSystem.Core\HouseRentingSystem.Core.csproj", "{4D5EA680-A58F-421E-A604-2571C7405288}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HouseRentingSystem.WebApi", "HouseRentingSystem.WebApi\HouseRentingSystem.WebApi.csproj", "{8F3AED41-C21F-4B7B-BFBD-94EF174081EC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{4D5EA680-A58F-421E-A604-2571C7405288}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D5EA680-A58F-421E-A604-2571C7405288}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D5EA680-A58F-421E-A604-2571C7405288}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F3AED41-C21F-4B7B-BFBD-94EF174081EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F3AED41-C21F-4B7B-BFBD-94EF174081EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F3AED41-C21F-4B7B-BFBD-94EF174081EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F3AED41-C21F-4B7B-BFBD-94EF174081EC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
