@@ -15,11 +15,11 @@
         </p>
         <hr class="my-4">
         <p class="lead">
-            @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated 
-            && await agentService.ExistsById(this.User.Id()))
+            @if (this.User?.Identity != null && this.User.Identity.IsAuthenticated
+           && await agentService.ExistsById(this.User.Id()))
             {
                 <a asp-controller="House" asp-action="Add" class="btn btn-primary btn-lg"
-           role="button">Add House</a>
+                   role="button">Add House</a>
             }
         </p>
     </div>
@@ -34,11 +34,11 @@
             <div class="carousel-item @(first ? "active" : string.Empty)">
 
                 <img class="d-block w-100" style="height:500px"
-                 src="@house.ImageUrl" alt="@house.Title">
+                     src="@house.ImageUrl" alt="@house.Title">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>
                         <a class="btn btn-primary" asp-controller="House" asp-action="Details"
-                       asp-route-information="@house.GetInformation()" asp-route-id="@house.Id"> @house.Title</a>
+                           asp-route-information="@house.GetInformation()" asp-route-id="@house.Id"> @house.Title</a>
                     </h5>
                 </div>
             </div>
