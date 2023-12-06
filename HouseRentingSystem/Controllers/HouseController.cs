@@ -75,7 +75,7 @@ namespace HouseRentingSystem.Controllers
             {
                 TempData["ErrorMessage"] = "Don't touch my slug!";
 
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
 
             return View(model);
@@ -121,7 +121,8 @@ namespace HouseRentingSystem.Controllers
 
             //Редиректваме към детайлите, само ако има добавено Id
 
-            return RedirectToAction(nameof(Details), new { id = id, information = model.GetInformation() });
+            return RedirectToAction(nameof(Details),
+                new { id = id, information = model.GetInformation() });
         }
 
         [HttpGet]

@@ -57,9 +57,11 @@ app.UseEndpoints(endpoints =>
 
     endpoints.MapControllerRoute(
       name: "houseDetails",
-      pattern: "House/Details/{id}/{information}"
+      pattern: "House/Details/{id}/{information}",
+      defaults: new {Controller = "Houses", Action = "Details"}
     );
 
+    endpoints.MapDefaultControllerRoute();
     endpoints.MapRazorPages();
 });
 

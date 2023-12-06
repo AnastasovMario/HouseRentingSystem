@@ -1,5 +1,4 @@
 ﻿using HouseRentingSystem.Core.Contracts;
-using HouseRentingSystem.Core.Models.House;
 using System.Text;
 using System.Text.RegularExpressions;
 
